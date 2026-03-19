@@ -1,0 +1,72 @@
+/* Copyright 2020 Josef Adamcik
+ * Modification for VIA support and RGB underglow by Jens Bonk-Wiltfang
+ * Modification for Vial support by Drew Petersen
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+// clang-format off
+
+#include <stdio.h>
+#include "keycodes.h"
+#include "keymap_us.h"
+#include "modifiers.h"
+#include "quantum_keycodes.h"
+char wpm_str[10];
+#include QMK_KEYBOARD_H
+
+// Default keymap. This can be changed in Vial. Use oled.c to change beavior that Vial cannot change.
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/*
+ * Layer 0, base, qwerty
+ */
+
+[0] = LAYOUT_split_3x6_2t_plus(
+    KC_ESCAPE,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                       KC_Y,   KC_U,   KC_I,   KC_O,   KC_MINS,    TD(td_equal_plus),
+    KC_TAB   ,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                                       KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_SEMICOLON,
+    TT(1)    ,  KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,                                                       KC_N,   KC_M,   TD(td_comma_plus), TD(td_dot_plus), KC_QUOTE, TD(td_square_curly_brackets),
+    KC_LGUI  ,  OSM(MOD_LALT),  OSM(MOD_LCTL),  OSM(MOD_LSFT),  KC_SPACE,   KC_MEDIA_PLAY_PAUSE             KC_NO,  KC_ENT, TT(2),  KC_BACKSPACE,   KC_SLASH,   KC_BACKSLASH,
+    XXXXXXX,    XXXXXXX,        XXXXXXX,        XXXXXXX,   KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,        LCA(KC_F13),    LCA(KC_F24),    XXXXXXX,    XXXXXXX,    XXXXXXX, XXXXXXX
+),
+/*
+ * Layer 1, number and F keys
+ */
+[1] = LAYOUT_split_3x6_2t_plus(
+    KC_TILDE ,  KC_PRINT_SCREEN,KC_F1,  KC_F2,  KC_F3,  KC_F4,                                KC_PPLS,  KC_7,   KC_8,   KC_9,   KC_PGUP,    KC_PGDN,
+    KC_NO    ,  KC_NO,          KC_F5,  KC_F6,  KC_F7,  KC_F8,                                KC_PAST,  KC_4,   KC_5,   KC_6,   KC_HOME,    KC_END,
+    KC_TRNS  ,  KC_NO,          KC_F9,  KC_F10, KC_F11, KC_F12,                               KC_PMNS,  KC_1,   KC_2,   KC_3,   KC_INSERT,  KC_DELETE,
+    KC_TRNS  ,  KC_TRNS,        KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,                              KC_NO,    KC_TRNS,KC_PLUS,KC_TRNS,KC_0,       KC_DOT,
+    XXXXXXX  ,  XXXXXXX,        XXXXXXX,XXXXXXX,KC_TRNS,KC_TRNS,                              KC_TRNS,  KC_TRNS,XXXXXXX,XXXXXXX,XXXXXXX,    XXXXXXX
+),
+/*
+ * Layer 2, mouse keys and navigation
+ */
+[2] = LAYOUT_split_3x6_2t_plus(
+    KC_NO  ,  KC_NO,    QK_MOUSE_BUTTON_3,      QK_MOUSE_CURSOR_UP,     QK_MOUSE_BUTTON_2,      KC_NO,                                  KC_NO,                  KC_NO,              KC_NO,                  KC_NO,                  KC_NO, KC_NO,
+    KC_NO  ,  KC_NO,    QK_MOUSE_CURSOR_LEFT,   QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  KC_NO,                                  KC_LEFT,                KC_DOWN,            KC_UP,                  KC_RIGHT,               KC_NO, KC_NO,
+    KC_NO  ,  KC_NO,    KC_NO,                  QK_MOUSE_BUTTON_4,      QK_MOUSE_BUTTON_5,      KC_NO,                                  QK_MOUSE_WHEEL_RIGHT,   QK_MOUSE_WHEEL_UP,  QK_MOUSE_WHEEL_DOWN,    QK_MOUSE_WHEEL_LEFT,    KC_NO, KC_NO,
+    KC_NO  ,  KC_TRNS,  KC_TRNS,                KC_TRNS,                QK_MOUSE_BUTTON_1,      KC_TRNS,                                KC_NO,                  KC_TRNS,            KC_NO,                  KC_NO,                  KC_NO, KC_NO,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,XXXXXXX,KC_TRNS,KC_TRNS,                                                                                KC_TRNS,                KC_TRNS,            XXXXXXX,                XXXXXXX,                XXXXXXX,XXXXXXX
+),
+};
+
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_WH_D, KC_WH_U) },
+    [1] = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
+    [2] = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
+    [3] = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
+};
+#endif
