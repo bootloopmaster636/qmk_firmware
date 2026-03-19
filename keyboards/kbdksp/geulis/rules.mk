@@ -12,3 +12,6 @@ SRC +=  oled/rp2040/master/oled_master_handler.c \
 RGBLIGHT_ENABLE = no
 RGBLIGHT_DRIVER = ws2812
 WS2812_DRIVER = vendor
+
+# Debouncing
+DEBOUNCE_TYPE = sym_defer_pr
