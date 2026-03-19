@@ -22,7 +22,7 @@
  * ---------------------------
  */
 #undef DEBOUNCE
-#define DEBOUNCE 10
+#define DEBOUNCE 16
 
 /* ---------------------------
  * RP2040 RGB Configuration
