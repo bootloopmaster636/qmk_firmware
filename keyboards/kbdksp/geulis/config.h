@@ -31,8 +31,19 @@
 #define OLED_TIMEOUT 180000
 #define CUSTOM_OLED_TIMEOUT 180000
 
+// Configurations
 #define TAPPING_TERM 160
 
+#define MOUSEKEY_INERTIA
+#define MOUSEKEY_DELAY 16
+#define MOUSEKEY_INTERVAL 16
+#define MOUSEKEY_MAX_SPEED 32
+#define MOUSEKEY_TIME_TO_MAX 32
+#define MOUSEKEY_FRICTION 24
+#define MOUSEKEY_MOVE_DELTA 1
+
+
+// RGB stuff
 #ifdef RGBLIGHT_ENABLE
   #define WS2812_DI_PIN GP13
   #define WS2812_PIO_USE_PIO1 // Force the usage of PIO1 peripheral, by default the WS2812 implementation uses the PIO0 peripheral
