@@ -31,6 +31,8 @@
 #define OLED_TIMEOUT 180000
 #define CUSTOM_OLED_TIMEOUT 180000
 
+#define TAPPING_TERM 160
+
 #ifdef RGBLIGHT_ENABLE
   #define WS2812_DI_PIN GP13
   #define WS2812_PIO_USE_PIO1 // Force the usage of PIO1 peripheral, by default the WS2812 implementation uses the PIO0 peripheral
@@ -45,7 +47,7 @@
 	#define RGBLIGHT_EFFECT_RGB_TEST
 	#define RGBLIGHT_EFFECT_ALTERNATING
 	#define RGBLIGHT_EFFECT_TWINKLE
-  
+
   #define RGBLIGHT_LED_COUNT 16
 
   #define RGBLED_SPLIT { 8, 8 }
