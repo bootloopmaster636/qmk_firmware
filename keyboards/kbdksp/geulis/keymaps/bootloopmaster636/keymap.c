@@ -62,6 +62,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_NO  ,  KC_TRNS,  KC_TRNS,                KC_TRNS,                QK_MOUSE_BUTTON_1,      KC_TRNS,                                KC_NO,                  KC_TRNS,            KC_NO,                  KC_NO,                  KC_NO, KC_NO,
     KC_TRNS,  KC_TRNS,                                                                                                                  KC_TRNS,                KC_TRNS
 ),
+/*
+ * Layer 3, reboot to bootloader
+ */
+[3] = LAYOUT_split_3x6_5t_plus(
+    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                                  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
+    KC_NO,  KC_NO,  KC_NO,  QK_REBOOT,  QK_BOOTLOADER,  KC_NO,                      KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
+    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                                  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
+    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                                  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
+    KC_NO,  KC_NO,                                                                  KC_NO,  KC_NO
+),
 };
 
 #if defined(ENCODER_MAP_ENABLE)
