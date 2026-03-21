@@ -19,10 +19,28 @@
 // clang-format off
 
 #include "keycodes.h"
+#include "keymap_us.h"
+#include "modifiers.h"
+#include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
-#include "tap_dances.h"
 char wpm_str[10];
 
+// TAP DANCES
+enum {
+    TD_EQUAL_PLUS,
+    TD_COMMA_PLUS,
+    TD_DOT_PLUS,
+    TD_BRACKETS
+};
+
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_EQUAL_PLUS] = ACTION_TAP_DANCE_DOUBLE(KC_EQUAL, LSFT(KC_1)),
+    [TD_COMMA_PLUS] = ACTION_TAP_DANCE_DOUBLE(KC_COMMA, LSFT(KC_9)),
+    [TD_DOT_PLUS] = ACTION_TAP_DANCE_DOUBLE(KC_DOT, LSFT(KC_0)),
+    [TD_BRACKETS] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT_BRACKET, KC_RIGHT_BRACKET)
+};
+
+// COMBOS
 const uint16_t PROGMEM capslock_combo[] = {OSM(MOD_LSFT), OSM(MOD_LCTL), COMBO_END};
 const uint16_t PROGMEM auto_underscore_combo[] = {OSM(MOD_LSFT), KC_SPACE, COMBO_END};
 const uint16_t PROGMEM bootloader_combo[] = {KC_SPACE, KC_TAB, KC_ESCAPE, COMBO_END};
@@ -32,6 +50,7 @@ combo_t key_combos[] = {
     COMBO(bootloader_combo, MO(3)),
 };
 
+// KEYMAPS
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
  * Layer 0, base, qwerty
