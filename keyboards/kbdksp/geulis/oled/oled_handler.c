@@ -15,6 +15,10 @@ __attribute__ ((weak)) oled_rotation_t rotate_slave(oled_rotation_t rotation) {r
 void oled_timer_reset(void) { oled_timer = timer_read32(); }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (!is_keyboard_master()) {
+        return rotate_slave(rotation);
+    }
+
     return rotate_master(rotation);
 }
 

@@ -35,7 +35,15 @@
         "vid": "0x7370"
     },
     "split": {
-        "enabled": true
+        "enabled": true,
+        "transport": {
+            "sync": {
+                "layer_state": true,
+                "indicators": true,
+                "modifiers": true,
+                "wpm": true
+            }
+        }
     },
     "layouts": {
         "LAYOUT_split_3x6_5t_plus": {

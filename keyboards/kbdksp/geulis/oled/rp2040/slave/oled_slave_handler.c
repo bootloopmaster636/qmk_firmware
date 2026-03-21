@@ -107,14 +107,14 @@ static const char PROGMEM KDBKSP[] = {0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 
 
 void render_slave_oled(void) {
     oled_on();
-    
+
     render_anim();
 
     oled_write_P(KDBKSP, false);
 
     oled_set_cursor(0, 1);
         sprintf(wpm_str, "WPM:%03d", get_current_wpm());  // edit the string to change wwhat shows up, edit %03d to change how many digits show up
-    oled_write(wpm_str, false);  
+    oled_write(wpm_str, false);
 }
 
-oled_rotation_t rotate_slave(oled_rotation_t rotation) {return OLED_ROTATION_0;}
+oled_rotation_t rotate_slave(oled_rotation_t rotation) {return OLED_ROTATION_270;}
