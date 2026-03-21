@@ -18,3 +18,9 @@ DEBOUNCE_TYPE = sym_defer_pr
 
 # Tap Dance
 TAP_DANCE_ENABLE = yes
+
+# Mouse Keys
+MOUSEKEY_ENABLE = yes
+
+# Other
+COMBO_ENABLE = yes

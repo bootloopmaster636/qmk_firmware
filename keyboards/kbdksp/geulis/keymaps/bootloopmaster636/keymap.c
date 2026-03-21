@@ -18,17 +18,19 @@
 
 // clang-format off
 
-#include QMK_KEYBOARD_H
-#include <stdio.h>
 #include "keycodes.h"
-#include "keymap_us.h"
-#include "modifiers.h"
-#include "quantum_keycodes.h"
+#include QMK_KEYBOARD_H
 #include "tap_dances.h"
-
 char wpm_str[10];
 
-// Default keymap. This can be changed in Vial. Use oled.c to change beavior that Vial cannot change.
+const uint16_t PROGMEM capslock_combo[] = {OSM(MOD_LSFT), OSM(MOD_LCTL), COMBO_END};
+const uint16_t PROGMEM auto_underscore_combo[] = {OSM(MOD_LSFT), KC_SPACE, COMBO_END};
+const uint16_t PROGMEM bootloader_combo[] = {KC_SPACE, KC_TAB, KC_ESCAPE, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(capslock_combo, KC_CAPS_LOCK),
+    COMBO(auto_underscore_combo, LSFT(KC_MINUS)),
+    COMBO(bootloader_combo, MO(3)),
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -36,41 +38,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [0] = LAYOUT_split_3x6_5t_plus(
-    KC_ESCAPE,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                       KC_Y,   KC_U,   KC_I,   KC_O,   KC_MINS,    TD(TD_EQUAL_PLUS),
-    KC_TAB   ,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                                       KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_SEMICOLON,
-    TT(1)    ,  KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,                                                       KC_N,   KC_M,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_QUOTE, TD(TD_BRACKETS),
-    KC_LGUI  ,  OSM(MOD_LALT),  OSM(MOD_LCTL),  OSM(MOD_LSFT),  KC_SPACE,   KC_MEDIA_PLAY_PAUSE,            KC_NO,  KC_ENT, TT(2),  KC_BACKSPACE,   KC_SLASH,   KC_BACKSLASH,
-    KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,                                                               LCA(KC_F13),    LCA(KC_F24)
+    KC_ESCAPE,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                                                       KC_Y,   KC_U,   KC_I,   KC_O,   KC_MINS,    TD(TD_EQUAL_PLUS),
+    KC_TAB   ,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G, KC_MEDIA_PLAY_PAUSE,                                                  KC_MUTE,        KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_SEMICOLON,
+    TT(1)    ,  KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, KC_MEDIA_NEXT_TRACK, KC_MEDIA_PREV_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_N,   KC_M,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_QUOTE, TD(TD_BRACKETS),
+    KC_LGUI  ,  OSM(MOD_LALT),  OSM(MOD_LCTL),  OSM(MOD_LSFT),  KC_SPACE,                                                                   KC_ENT, TT(2),  KC_BACKSPACE,   KC_SLASH,   KC_BACKSLASH
 ),
 /*
  * Layer 1, number and F keys
  */
 [1] = LAYOUT_split_3x6_5t_plus(
-    KC_TILDE ,  KC_PRINT_SCREEN,KC_F1,  KC_F2,  KC_F3,  KC_F4,                                KC_PPLS,  KC_7,   KC_8,   KC_9,   KC_PGUP,    KC_PGDN,
-    KC_NO    ,  KC_NO,          KC_F5,  KC_F6,  KC_F7,  KC_F8,                                KC_PAST,  KC_4,   KC_5,   KC_6,   KC_HOME,    KC_END,
-    KC_TRNS  ,  KC_NO,          KC_F9,  KC_F10, KC_F11, KC_F12,                               KC_PMNS,  KC_1,   KC_2,   KC_3,   KC_INSERT,  KC_DELETE,
-    KC_TRNS  ,  KC_TRNS,        KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,                              KC_NO,    KC_TRNS,KC_PLUS,KC_TRNS,KC_0,       KC_DOT,
-    KC_TRNS,KC_TRNS,                                                                          KC_TRNS,  KC_TRNS
+    KC_TILDE ,  KC_PRINT_SCREEN,KC_F1,  KC_F2,  KC_F3,  KC_F4,                                                          KC_PPLS,    KC_7,       KC_8,       KC_9,   KC_PGUP,    KC_PGDN,
+    KC_NO    ,  KC_NO,          KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_TRNS,                        KC_TRNS,                KC_PAST,    KC_4,       KC_5,   KC_6,       KC_HOME,    KC_END,
+    KC_TRNS  ,  KC_NO,          KC_F9,  KC_F10, KC_F11, KC_F12, KC_TRNS, KC_TRNS,               KC_TRNS,    KC_TRNS,    KC_PMNS,    KC_1,   KC_2,       KC_3,   KC_INSERT,  KC_DELETE,
+    KC_TRNS  ,  KC_TRNS,        KC_TRNS,KC_TRNS,KC_TRNS,                                                                KC_TRNS,    KC_PLUS,    KC_TRNS,    KC_0,   KC_DOT
 ),
 /*
  * Layer 2, mouse keys and navigation
  */
 [2] = LAYOUT_split_3x6_5t_plus(
-    KC_NO  ,  KC_NO,    QK_MOUSE_BUTTON_3,      QK_MOUSE_CURSOR_UP,     QK_MOUSE_BUTTON_2,      KC_NO,                                  KC_NO,                  KC_NO,              KC_NO,                  KC_NO,                  KC_NO, KC_NO,
-    KC_NO  ,  KC_NO,    QK_MOUSE_CURSOR_LEFT,   QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  KC_NO,                                  KC_LEFT,                KC_DOWN,            KC_UP,                  KC_RIGHT,               KC_NO, KC_NO,
-    KC_NO  ,  KC_NO,    KC_NO,                  QK_MOUSE_BUTTON_4,      QK_MOUSE_BUTTON_5,      KC_NO,                                  QK_MOUSE_WHEEL_RIGHT,   QK_MOUSE_WHEEL_UP,  QK_MOUSE_WHEEL_DOWN,    QK_MOUSE_WHEEL_LEFT,    KC_NO, KC_NO,
-    KC_NO  ,  KC_TRNS,  KC_TRNS,                KC_TRNS,                QK_MOUSE_BUTTON_1,      KC_TRNS,                                KC_NO,                  KC_TRNS,            KC_NO,                  KC_NO,                  KC_NO, KC_NO,
-    KC_TRNS,  KC_TRNS,                                                                                                                  KC_TRNS,                KC_TRNS
+    KC_NO  ,  KC_NO,    QK_MOUSE_BUTTON_3,      QK_MOUSE_CURSOR_UP,     QK_MOUSE_BUTTON_2,      KC_NO,                                              KC_NO,                  KC_NO,              KC_NO,                  KC_NO,                  KC_NO, KC_NO,
+    KC_NO  ,  KC_NO,    QK_MOUSE_CURSOR_LEFT,   QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  KC_NO, KC_NO,                      KC_NO,           KC_LEFT,                KC_DOWN,            KC_UP,                  KC_RIGHT,               KC_NO, KC_NO,
+    KC_NO  ,  KC_NO,    KC_NO,                  QK_MOUSE_BUTTON_4,      QK_MOUSE_BUTTON_5,      KC_NO, KC_NO, KC_NO,              KC_NO, KC_NO,     QK_MOUSE_WHEEL_RIGHT,   QK_MOUSE_WHEEL_UP,  QK_MOUSE_WHEEL_DOWN,    QK_MOUSE_WHEEL_LEFT,    KC_NO, KC_NO,
+    KC_NO  ,  KC_TRNS,  KC_TRNS,                KC_TRNS,                QK_MOUSE_BUTTON_1,                                                          KC_NO,                  KC_TRNS,            KC_NO,                  KC_NO,                  KC_NO
 ),
 /*
  * Layer 3, reboot to bootloader
  */
 [3] = LAYOUT_split_3x6_5t_plus(
     KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                                  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
-    KC_NO,  KC_NO,  KC_NO,  QK_REBOOT,  QK_BOOTLOADER,  KC_NO,                      KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
-    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                                  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
-    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                                  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
-    KC_NO,  KC_NO,                                                                  KC_NO,  KC_NO
+    KC_NO,  KC_NO,  KC_NO,  QK_REBOOT,  QK_BOOTLOADER,  KC_NO, KC_NO,         KC_NO,KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
+    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO, KC_NO, KC_NO,       KC_NO, KC_NO,KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,
+    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                                    KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO
 ),
 };
 
