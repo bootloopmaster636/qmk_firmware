@@ -4,12 +4,6 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
-
-bool shift_pressed;
-bool alt_pressed;
-bool ctrl_pressed;
-bool gui_pressed;
-
 /* ---------------------------
  * Custom OLED Fncs Prototypes
  * ---------------------------
