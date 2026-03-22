@@ -37,7 +37,10 @@
     "split": {
         "enabled": true,
         "transport": {
+            "protocol": "serial",
             "sync": {
+                "activity": true,
+                "oled": false,
                 "layer_state": true,
                 "indicators": true,
                 "modifiers": true,

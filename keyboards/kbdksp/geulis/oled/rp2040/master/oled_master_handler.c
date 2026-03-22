@@ -9,8 +9,6 @@
 // static const char PROGMEM ICON_LAYER[] = {0x80, 0x81, 0x82, 0x83, 0};
 
 void render_master_oled(void) {
-    oled_on();
-
     oled_write_P(PSTR(" KBD "), false);
     oled_write_P(PSTR(" KSP "), false);
 

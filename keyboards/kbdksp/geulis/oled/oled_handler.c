@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "jpe230.h"
+#include "keyboard.h"
+#include "oled_driver.h"
 #ifdef OLED_ENABLE
 uint8_t logged_row;
 uint8_t logged_col;
@@ -35,7 +37,20 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+        return false;
+    }
+
     render_master_oled();
+
     return false;
+}
+
+void housekeeping_task_user(void) {
+    if (!is_keyboard_master()) {
+        if (timer_elapsed32(last_input_activity_elapsed()) < OLED_TIMEOUT) {
+            oled_on();
+        }
+    }
 }
 #endif

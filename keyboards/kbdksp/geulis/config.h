@@ -28,7 +28,11 @@
 
 #define VBUS_SENSE GP12
 
-#define OLED_TIMEOUT 180000
+// oled settings
+#define OLED_TIMEOUT 10000
+#define OLED_BRIGHTNESS 128
+#define OLED_FADE_OUT
+#define OLED_FADE_OUT_INTERVAL 12
 
 // Configurations
 #define TAPPING_TERM 160
