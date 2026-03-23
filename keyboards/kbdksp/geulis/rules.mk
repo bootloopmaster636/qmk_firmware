@@ -4,10 +4,11 @@ OLED_DRIVER = ssd1306
 
 OLED_DIR = oled
 OLED_FILES = oled_handler.c \
-             rp2040/master/oled_master_handler.c \
-             rp2040/slave/oled_slave_handler.c
+				screens/bootlogo.c \
+				screens/main_screen.c \
+				screens/wrong_side.c \
 
-SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) process_record.c
+SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) oled/process_record.c
 
 DEBUG_MATRIX_SCAN_RATE_ENABLE = yes
 

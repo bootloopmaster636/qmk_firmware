@@ -1,7 +1,7 @@
 // Copyright 2022 Jose Pablo Ramirez (@jpe230)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "jpe230.h"
+#include "../../jpe230.h"
 #include <stdio.h>
 
 char wpm_str[10];

@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include "action_util.h"
-#include "jpe230.h"
+#include "../../jpe230.h"
 #include "modifiers.h"
 
 // static const char PROGMEM ICON_LAYER[] = {0x80, 0x81, 0x82, 0x83, 0};

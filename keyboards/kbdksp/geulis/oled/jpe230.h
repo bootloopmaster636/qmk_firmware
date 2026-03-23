@@ -4,11 +4,25 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "action_util.h"
 /* ---------------------------
  * Custom OLED Fncs Prototypes
  * ---------------------------
  */
-void render_slave_oled(void);
-void render_master_oled(void);
 void oled_timer_reset(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
+
+
+// Layers enum
+typedef enum {
+    QWERTY = 0,
+    NUM = 1,
+    MOUSE = 2,
+    DFU = 3,
+} kb_modes_t;
+
+
+// Screens
+void render_logo(void);
+void render_wrong_side(void);
+void render_main_screen(kb_modes_t active_layer);
