@@ -40,9 +40,10 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
 }
 
 void render_screen_by_layer(void) {
-    kb_modes_t layer = (kb_modes_t) get_highest_layer(layer_state);
+    kb_modes_t layer = (kb_modes_t) get_highest_layer(layer_state | default_layer_state);
     switch (layer) {
         case QWERTY:
+        case COLEMAK_DH:
         case NUM:
             render_main_screen(layer);
             break;

@@ -16,9 +16,10 @@ void set_keylog(uint16_t keycode, keyrecord_t *record);
 // Layers enum
 typedef enum {
     QWERTY = 0,
-    NUM = 1,
-    MOUSE = 2,
-    DFU = 3,
+    COLEMAK_DH = 1,
+    NUM = 2,
+    MOUSE = 3,
+    DFU = 4,
 } kb_modes_t;
 
 
