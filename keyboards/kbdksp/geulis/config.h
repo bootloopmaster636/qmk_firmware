@@ -30,9 +30,9 @@
 
 // oled settings
 #define OLED_TIMEOUT 10000
-#define OLED_BRIGHTNESS 128
+#define OLED_BRIGHTNESS 96
 #define OLED_FADE_OUT
-#define OLED_FADE_OUT_INTERVAL 12
+#define OLED_FADE_OUT_INTERVAL 2
 
 // Configurations
 #define TAPPING_TERM 160
