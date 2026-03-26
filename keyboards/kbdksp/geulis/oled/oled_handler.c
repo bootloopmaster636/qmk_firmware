@@ -48,6 +48,7 @@ void render_screen_by_layer(void) {
             render_main_screen(layer);
             break;
         case MOUSE:
+        render_mouse_screen();
             break;
         case DFU:
             break;

@@ -6,11 +6,12 @@ OLED_DIR = oled
 OLED_FILES = oled_handler.c \
 				screens/bootlogo.c \
 				screens/main_screen.c \
+				screens/mouse_screen.c \
 				screens/wrong_side.c \
 
 SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) oled/process_record.c
 
-DEBUG_MATRIX_SCAN_RATE_ENABLE = yes
+DEBUG_MATRIX_SCAN_RATE_ENABLE = no
 
 RGBLIGHT_ENABLE = no
 RGBLIGHT_DRIVER = ws2812
