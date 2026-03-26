@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_NO  ,  KC_NO,    QK_MOUSE_BUTTON_3,      QK_MOUSE_CURSOR_UP,     QK_MOUSE_BUTTON_2,      KC_NO,                                              KC_NO,                  KC_NO,              KC_NO,                  KC_NO,                  KC_NO, KC_NO,
     KC_NO  ,  KC_NO,    QK_MOUSE_CURSOR_LEFT,   QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  KC_NO, KC_NO,                     KC_NO,            KC_LEFT,                KC_DOWN,            KC_UP,                  KC_RIGHT,               KC_NO, KC_NO,
     KC_TRNS,  KC_NO,    KC_NO,                  QK_MOUSE_BUTTON_4,      QK_MOUSE_BUTTON_5,      KC_NO, KC_NO, KC_NO,              KC_NO, KC_NO,     QK_MOUSE_WHEEL_RIGHT,   QK_MOUSE_WHEEL_UP,  QK_MOUSE_WHEEL_DOWN,    QK_MOUSE_WHEEL_LEFT,    KC_NO, KC_NO,
-    KC_NO  ,  KC_TRNS,  KC_NO,                  KC_TRNS,                QK_MOUSE_BUTTON_1,                                               KC_NO,     KC_NO,              KC_NO,                  KC_NO,                  KC_NO
+    KC_NO  ,  KC_TRNS,  KC_NO,                  KC_TRNS,                QK_MOUSE_BUTTON_1,                                               KC_NO,     KC_TRNS,                KC_NO,                  KC_NO,                  KC_NO
 ),
 
 /*

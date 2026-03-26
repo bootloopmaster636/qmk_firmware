@@ -20,6 +20,7 @@ __attribute__ ((weak)) oled_rotation_t rotate_slave(oled_rotation_t rotation) {r
 static uint32_t oled_timer = 0;
 static bool logo_finished = false;
 static bool is_oled_enabled = true;
+static kb_modes_t last_layer = -1;
 
 void oled_timer_reset(void) { oled_timer = timer_read32(); }
 
@@ -41,6 +42,11 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
 
 void render_screen_by_layer(void) {
     kb_modes_t layer = (kb_modes_t) get_highest_layer(layer_state | default_layer_state);
+    if (layer != last_layer) {
+            oled_clear();
+            last_layer = layer;
+        }
+
     switch (layer) {
         case QWERTY:
         case COLEMAK_DH:
@@ -48,7 +54,7 @@ void render_screen_by_layer(void) {
             render_main_screen(layer);
             break;
         case MOUSE:
-        render_mouse_screen();
+            render_mouse_screen();
             break;
         case DFU:
             break;

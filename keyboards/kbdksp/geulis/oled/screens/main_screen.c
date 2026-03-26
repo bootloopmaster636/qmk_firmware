@@ -50,7 +50,7 @@ static const char PROGMEM ctrl_on[] = {
     255, 255, 3, 3, 243, 243, 243, 243, 147, 207, 229, 249, 17, 31, 255, 255, 255, 255, 192, 192, 207, 207, 207, 207, 207, 207, 207, 207, 192, 192, 255, 255,
 };
 
-static char PROGMEM mods_images[128] = {};
+static char mods_images[128] = {};
 
 static char wpm_str[6];
 
@@ -80,14 +80,15 @@ void render_mods_icon(bool state_caps_on, bool state_shift_on, bool state_alt_on
             }
 
             // Apply to the final buffer
-            mods_images[row * 32 + col] = is_on ? data_on[icon_idx] : data_off[icon_idx];
+            mods_images[row * 32 + col] = is_on ? pgm_read_byte(&data_on[icon_idx]) : pgm_read_byte(&data_off[icon_idx]);
         }
     }
 
-    oled_write_raw_P(mods_images, sizeof(mods_images));
+    oled_write_raw(mods_images, sizeof(mods_images));
 }
 
 void render_main_screen(kb_modes_t active_layer) {
+    oled_set_cursor(0, 0);
     switch (active_layer) {
         case QWERTY:
             render_typing_icon();
