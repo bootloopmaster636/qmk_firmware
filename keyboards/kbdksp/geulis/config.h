@@ -14,6 +14,8 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
 #include "config_rp2040.h"
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET // Activates the double-tap to bootloader behavior
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 200U
 
 #pragma once
 #define OLED_DISPLAY_128X32
@@ -35,17 +37,18 @@
 #define OLED_FADE_OUT_INTERVAL 0
 
 // Configurations
-#define TAPPING_TERM 150
+#define TAPPING_TERM 160
+#define PERMISSIVE_HOLD
 
-#define ONESHOT_TAP_TOGGLE 2
-#define TAPPING_TOGGLE 2
+#define ONESHOT_TAP_TOGGLE 3
+#define TAPPING_TOGGLE 3
 
 #define MOUSEKEY_INERTIA
 #define MOUSEKEY_DELAY 8
 #define MOUSEKEY_INTERVAL 16
-#define MOUSEKEY_MAX_SPEED 26
-#define MOUSEKEY_TIME_TO_MAX 32
-#define MOUSEKEY_FRICTION 36
+#define MOUSEKEY_MAX_SPEED 32
+#define MOUSEKEY_TIME_TO_MAX 20
+#define MOUSEKEY_FRICTION 48
 #define MOUSEKEY_MOVE_DELTA 1
 
 
