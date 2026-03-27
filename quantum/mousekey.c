@@ -320,8 +320,8 @@ void mousekey_task(void) {
         mousekey_x_inertia = calc_inertia(mousekey_x_dir, mousekey_x_inertia);
         mousekey_y_inertia = calc_inertia(mousekey_y_dir, mousekey_y_inertia);
 
-        mouse_report.x = move_unit(0);
-        mouse_report.y = move_unit(1);
+        mouse_report.x = move_unit(0) * MOUSEKEY_RATIO;
+        mouse_report.y = move_unit(1) / MOUSEKEY_RATIO;
 
         // prevent sticky "drift"
         if ((!mousekey_x_dir) && (!mousekey_x_inertia)) tmpmr.x = 0;
@@ -346,11 +346,11 @@ void mousekey_task(void) {
 
         /* diagonal move [1/sqrt(2)] */
         if (mouse_report.x && mouse_report.y) {
-            mouse_report.x = times_inv_sqrt2(mouse_report.x);
+            mouse_report.x = times_inv_sqrt2(mouse_report.x) * MOUSEKEY_RATIO;
             if (mouse_report.x == 0) {
                 mouse_report.x = 1;
             }
-            mouse_report.y = times_inv_sqrt2(mouse_report.y);
+            mouse_report.y = times_inv_sqrt2(mouse_report.y / MOUSEKEY_RATIO);
             if (mouse_report.y == 0) {
                 mouse_report.y = 1;
             }
@@ -523,8 +523,8 @@ void mousekey_task(void) {
     mouse_report.h       = 0;
 
     if ((tmpmr.x || tmpmr.y) && timer_elapsed(last_timer_c) > c_intervals[mk_speed]) {
-        mouse_report.x = tmpmr.x;
-        mouse_report.y = tmpmr.y;
+        mouse_report.x = tmpmr.x * MOUSEKEY_RATIO;
+        mouse_report.y = tmpmr.y / MOUSEKEY_RATIO;
     }
     if ((tmpmr.h || tmpmr.v) && timer_elapsed(last_timer_w) > w_intervals[mk_speed]) {
         mouse_report.v = tmpmr.v;

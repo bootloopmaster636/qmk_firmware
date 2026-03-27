@@ -76,6 +76,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #            define MOUSEKEY_TIME_TO_MAX 30
 #        endif
 #    endif
+#    ifndef MOUSEKEY_RATIO
+#        define MOUSEKEY_RATIO 1.0
+#    endif
 #    ifndef MOUSEKEY_WHEEL_DELAY
 #        define MOUSEKEY_WHEEL_DELAY 10
 #    endif
