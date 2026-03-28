@@ -26,7 +26,6 @@
 #include "progmem.h"
 #include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
-char wpm_str[10];
 
 // TAP DANCES
 enum {

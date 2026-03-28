@@ -35,8 +35,9 @@ void keyboard_post_init_user(void) {
     oled_timer = timer_read32();
 
     // whether to render easter egg or not
-    srand(time(NULL));
-    int random_result = (rand() % 10) + 1;
+    uint32_t hardware_seed = *(volatile uint32_t *)(0x40060000 + 0x1C);
+    srand(hardware_seed);
+    int random_result = (rand() % 16) + 1;
     enable_logo = random_result == 1;
 }
 
