@@ -8,8 +8,10 @@ OLED_FILES = oled_handler.c \
 				screens/main_screen.c \
 				screens/mouse_screen.c \
 				screens/wrong_side.c \
+				screens/dfu_screen.c \
+				screens/stats_screen.c \
 
-SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) oled/process_record.c
+SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) processes.c
 
 DEBUG_MATRIX_SCAN_RATE_ENABLE = no
 
@@ -26,3 +28,4 @@ MOUSEKEY_ENABLE = yes
 # Other
 COMBO_ENABLE = yes
 DEBOUNCE_TYPE = sym_eager_pr
+NKRO_ENABLE = yes

@@ -23,68 +23,47 @@ static void render_num_icon(void) {
 }
 
 static const char PROGMEM caps_off[] = {
-    0, 0, 0, 0, 12, 12, 14, 14, 14, 14, 60, 60, 240, 240, 0, 0, 0, 0, 127, 103, 85, 85, 65, 127, 127, 65, 87, 87, 71, 127, 0, 0,
+    0, 112, 118, 114, 114, 114, 124, 0, 0, 60, 66, 66, 66, 0, 124, 18, 18, 124, 0, 124, 18, 18, 12, 0, 76, 74, 90, 50, 0, 0, 0, 0,
 };
 static const char PROGMEM caps_on[] = {
-    255, 255, 15, 15, 195, 195, 241, 241, 241, 241, 195, 195, 15, 15, 255, 255, 255, 255, 128, 188, 146, 146, 188, 128, 128, 190, 170, 170, 190, 128, 255, 255,
+    255, 131, 141, 141, 141, 141, 131, 255, 255, 195, 189, 189, 189, 255, 131, 237, 237, 131, 255, 131, 237, 237, 243, 255, 179, 181, 165, 205, 255, 255, 255, 255,
 };
 
 static const char PROGMEM shift_off[] = {
-    0, 0, 0, 0, 0, 192, 192, 48, 48, 192, 192, 0, 0, 0, 0, 0, 0, 12, 12, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 12, 12, 0,
+    0, 32, 16, 8, 8, 16, 32, 0, 0, 76, 74, 90, 50, 0, 126, 8, 8, 126, 0, 122, 0, 124, 10, 10, 2, 0, 54, 72, 72, 72, 0, 0,
 };
 static const char PROGMEM shift_on[] = {
-    255, 255, 255, 63, 63, 15, 15, 195, 195, 15, 15, 63, 63, 255, 255, 255, 243, 240, 240, 252, 252, 231, 231, 231, 231, 231, 231, 252, 252, 240, 240, 243,
+    255, 231, 243, 137, 137, 243, 231, 255, 255, 179, 181, 165, 205, 255, 129, 247, 247, 129, 255, 133, 255, 131, 245, 245, 253, 255, 201, 183, 183, 183, 255, 255,
 };
 
 static const char PROGMEM alt_off[] = {
-    0, 128, 64, 160, 80, 40, 16, 40, 16, 40, 16, 40, 16, 40, 16, 40, 15, 14, 15, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
+    0, 48, 40, 36, 32, 36, 32, 0, 0, 124, 18, 18, 124, 0, 62, 64, 64, 64, 0, 54, 72, 72, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 static const char PROGMEM alt_on[] = {
-    255, 127, 63, 31, 15, 135, 199, 199, 199, 199, 199, 199, 199, 199, 199, 199, 244, 250, 244, 250, 245, 251, 245, 251, 245, 251, 245, 251, 245, 251, 245, 251,
+    255, 199, 243, 219, 251, 219, 251, 255, 255, 131, 237, 237, 131, 255, 193, 191, 191, 191, 255, 201, 183, 183, 183, 255, 255, 255, 255, 255, 255, 255, 255, 255,
 };
 
 static const char PROGMEM ctrl_off[] = {
-    0, 0, 252, 252, 12, 12, 12, 12, 108, 48, 26, 6, 238, 224, 0, 0, 0, 0, 63, 63, 48, 48, 48, 48, 48, 48, 48, 48, 63, 63, 0, 0,
+    0, 48, 72, 8, 8, 28, 8, 0, 0, 60, 66, 66, 66, 0, 54, 72, 72, 72, 0, 124, 18, 42, 76, 0, 62, 64, 64, 64, 0, 0, 0, 0,
 };
 static const char PROGMEM ctrl_on[] = {
-    255, 255, 3, 3, 243, 243, 243, 243, 147, 207, 229, 249, 17, 31, 255, 255, 255, 255, 192, 192, 207, 207, 207, 207, 207, 207, 207, 207, 192, 192, 255, 255,
+    255, 207, 247, 247, 213, 227, 247, 255, 255, 195, 189, 189, 189, 255, 201, 183, 183, 183, 255, 131, 237, 213, 179, 255, 193, 191, 191, 191, 255, 255, 255, 255,
 };
-
-static char mods_images[128] = {};
 
 static char wpm_str[6];
 
 void render_mods_icon(bool state_caps_on, bool state_shift_on, bool state_alt_on, bool state_ctrl_on) {
-    for (int row = 0; row < 4; row++) {
-        // Determine which status to check
-        bool is_on;
-        const char *data_on, *data_off;
+    oled_write_raw(state_caps_on ? caps_on : caps_off, sizeof(caps_off));
+    oled_advance_page(false);
 
-        // Logic for left half (0-15) and right half (16-31)
-        for (int col = 0; col < 32; col++) {
-            // Calculate the local row (0 or 1) for the icon data
-            int icon_row = row % 2;
-            int icon_col = (col < 16) ? col : (col - 16);
-            int icon_idx = (icon_row * 16) + icon_col;
+    oled_write_raw(state_shift_on ? shift_on : shift_off, sizeof(shift_off));
+    oled_advance_page(false);
 
-            if (col < 16) {
-                // Left Icon Selection
-                data_on  = (row < 2) ? caps_on  : alt_on;
-                data_off = (row < 2) ? caps_off : alt_off;
-                is_on    = (row < 2) ? state_caps_on : state_alt_on;
-            } else {
-                // Right Icon Selection
-                data_on  = (row < 2) ? shift_on : ctrl_on;
-                data_off = (row < 2) ? shift_off : ctrl_off;
-                is_on    = (row < 2) ? state_shift_on : state_ctrl_on;
-            }
+    oled_write_raw(state_alt_on ? alt_on : alt_off, sizeof(alt_off));
+    oled_advance_page(false);
 
-            // Apply to the final buffer
-            mods_images[row * 32 + col] = is_on ? pgm_read_byte(&data_on[icon_idx]) : pgm_read_byte(&data_off[icon_idx]);
-        }
-    }
-
-    oled_write_raw(mods_images, sizeof(mods_images));
+    oled_write_raw(state_ctrl_on ? ctrl_on : ctrl_off, sizeof(ctrl_off));
+    oled_advance_page(false);
 }
 
 void render_main_screen(kb_modes_t active_layer) {
@@ -111,12 +90,12 @@ void render_main_screen(kb_modes_t active_layer) {
     // render mods
     led_t   led_state = host_keyboard_led_state();
     uint8_t mods      = get_mods() | get_oneshot_mods() | get_weak_mods();
-    oled_write_ln_P(" ", false);
-    oled_write_ln_P(" ", false);
+    oled_advance_page(false);
+    oled_advance_page(false);
     render_mods_icon(led_state.caps_lock, mods & MOD_MASK_SHIFT, mods & MOD_MASK_ALT, mods & MOD_MASK_CTRL);
 
     // render wpm
-    oled_set_cursor(0, 13);
+    oled_set_cursor(0, 14);
     oled_write_P(PSTR(" WPM "), true);
     sprintf(wpm_str, " %03d ", get_current_wpm());
     oled_write_P(wpm_str, true);

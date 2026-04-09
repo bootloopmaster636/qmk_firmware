@@ -13,11 +13,13 @@
   * You should have received a copy of the GNU General Public License
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
+
+#pragma once
+
 #include "config_rp2040.h"
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET // Activates the double-tap to bootloader behavior
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 200U
 
-#pragma once
 #define OLED_DISPLAY_128X32
 #define I2C1_SCL_PIN        GP3
 #define I2C1_SDA_PIN        GP2
@@ -31,27 +33,30 @@
 #define VBUS_SENSE GP12
 
 // oled settings
-#define OLED_TIMEOUT 15000
-#define OLED_BRIGHTNESS 96
+#define OLED_TIMEOUT (60000*3)
+#define OLED_BRIGHTNESS 8
 #define OLED_FADE_OUT
-#define OLED_FADE_OUT_INTERVAL 0
+#define OLED_FADE_OUT_INTERVAL 15
 
 // Configurations
-#define TAPPING_TERM 160
+#define TAPPING_TERM 150
 #define PERMISSIVE_HOLD
 
 #define ONESHOT_TAP_TOGGLE 2
-#define ONESHOT_TIMEOUT 3000
-#define TAPPING_TOGGLE 3
+#define ONESHOT_TIMEOUT 1000
+#define TAPPING_TOGGLE 2
 
 #define MOUSEKEY_INERTIA
-#define MOUSEKEY_DELAY 8
+#define MOUSEKEY_DELAY 76
 #define MOUSEKEY_INTERVAL 16
-#define MOUSEKEY_MAX_SPEED 25
-#define MOUSEKEY_TIME_TO_MAX 16
+#define MOUSEKEY_MAX_SPEED 48
+#define MOUSEKEY_TIME_TO_MAX 22
 #define MOUSEKEY_FRICTION 40
 #define MOUSEKEY_MOVE_DELTA 1
-#define MOUSEKEY_SENS_Y 0.72
+#define MOUSEKEY_SENS_Y 0.7
+
+// Split transport stuff
+#define SPLIT_TRANSACTION_IDS_KB KB_TRANSACTION_SYNC_SUSPEND
 
 
 // RGB stuff
