@@ -23,8 +23,11 @@
 #include "keymap_us.h"
 #include "modifiers.h"
 #include "process_combo.h"
+#include "process_tap_dance.h"
 #include "progmem.h"
+#include "quantum.h"
 #include "quantum_keycodes.h"
+#include "tap_dances_hold.h"
 #include QMK_KEYBOARD_H
 
 // TAP DANCES
@@ -32,15 +35,18 @@ enum {
     TD_EQUAL_PLUS,
     TD_COMMA_PLUS,
     TD_DOT_PLUS,
-    TD_BRACKETS
+    TD_BRACKETS,
+    TD_BKSP
 };
 
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_EQUAL_PLUS] = ACTION_TAP_DANCE_DOUBLE(KC_EQUAL, LSFT(KC_1)),
-    [TD_COMMA_PLUS] = ACTION_TAP_DANCE_DOUBLE(KC_COMMA, LSFT(KC_9)),
-    [TD_DOT_PLUS] = ACTION_TAP_DANCE_DOUBLE(KC_DOT, LSFT(KC_0)),
-    [TD_BRACKETS] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT_BRACKET, KC_RIGHT_BRACKET)
+    [TD_EQUAL_PLUS] = ACTION_TAP_DANCE_TAP_HOLD(KC_EQUAL, LSFT(KC_1)),
+    [TD_COMMA_PLUS] = ACTION_TAP_DANCE_TAP_HOLD(KC_COMMA, LSFT(KC_9)),
+    [TD_DOT_PLUS] = ACTION_TAP_DANCE_TAP_HOLD(KC_DOT, LSFT(KC_0)),
+    [TD_BRACKETS] = ACTION_TAP_DANCE_TAP_HOLD(KC_LEFT_BRACKET, KC_RIGHT_BRACKET),
+    [TD_BKSP] = ACTION_TAP_DANCE_DOUBLE(KC_BACKSPACE, LCTL(KC_BACKSPACE))
 };
+
 
 // COMBOS
 const uint16_t PROGMEM capslock_combo[] = {KC_TAB, OSM(MOD_LCTL), COMBO_END};
@@ -68,14 +74,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                                                       KC_Y,   KC_U,   KC_I,   KC_O,   KC_MINS,    TD(TD_EQUAL_PLUS),
     KC_TAB   ,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G, KC_MEDIA_PLAY_PAUSE,                                                  KC_MUTE,        KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_V,   KC_B, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_N,   KC_M,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),  KC_SPACE,                                                                                 OSM(MOD_LSFT),OSL(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),  KC_SPACE,                                                                                 OSM(MOD_LSFT),OSL(3), TD(TD_BKSP),TD(TD_BRACKETS),KC_BACKSLASH
 ),
 
 [1] = LAYOUT_split_3x6_5t_plus(
     KC_ESCAPE,  KC_Q,   KC_W,   KC_F,   KC_P,   KC_B,                                                                                       KC_J,   KC_L,   KC_U,   KC_Y,   KC_MINS,    TD(TD_EQUAL_PLUS),
     KC_TAB   ,  KC_A,   KC_R,   KC_S,   KC_T,   KC_G, KC_MEDIA_PLAY_PAUSE,                                                  KC_MUTE,        KC_M,   KC_N,   KC_E,   KC_I,   KC_O,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_D,   KC_V, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_K,   KC_H,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),  KC_SPACE,                                                                                 OSM(MOD_LSFT),OSL(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),  KC_SPACE,                                                                                 OSM(MOD_LSFT),OSL(3), TD(TD_BKSP),TD(TD_BRACKETS),KC_BACKSLASH
 ),
 
 /*
@@ -119,3 +125,23 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [3] = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
 };
 #endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record){
+    tap_dance_action_t *action;
+    tap_dance_state_t  *state;
+
+    switch (keycode) {
+        case TD(TD_EQUAL_PLUS):
+        case TD(TD_COMMA_PLUS):
+        case TD(TD_DOT_PLUS):
+        case TD(TD_BRACKETS):
+            action = tap_dance_get(QK_TAP_DANCE_GET_INDEX(keycode));
+            state  = tap_dance_get_state(QK_TAP_DANCE_GET_INDEX(keycode));
+            if (!record->event.pressed && state != NULL && state->count && !state->finished) {
+                tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
+                tap_code16(tap_hold->tap);
+            }
+    }
+
+    return true;
+}
