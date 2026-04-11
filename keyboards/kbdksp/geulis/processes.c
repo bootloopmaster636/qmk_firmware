@@ -21,7 +21,7 @@ split_sync_state_t kb_state = {false, 0};
 uint8_t  chars_typed  = 0;
 uint16_t last_keycode = 0;
 
-void keyboard_post_init_user(void) {
+void keyboard_post_init_kb(void) {
     // render bootlogo
     oled_post_init();
 
@@ -30,7 +30,7 @@ void keyboard_post_init_user(void) {
     }
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
             case QK_BOOT:
@@ -58,17 +58,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Nothing to do
-}
 
-void housekeeping_task_user(void) {
+void housekeeping_task_kb(void) {
     if (is_keyboard_master()) {
         transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
     }
 }
 
-void suspend_power_down_user() {
+void suspend_power_down_kb() {
     if (is_keyboard_master()) {
         if (!kb_state.is_suspended) {
             kb_state.is_suspended = true;
@@ -77,7 +74,7 @@ void suspend_power_down_user() {
     }
 }
 
-void suspend_wakeup_init_user(void) {
+void suspend_wakeup_init_kb(void) {
     if (is_keyboard_master()) {
         if (kb_state.is_suspended) {
             kb_state.is_suspended = false;
@@ -86,13 +83,13 @@ void suspend_wakeup_init_user(void) {
     }
 }
 
-void matrix_scan_user(void) {
+void matrix_scan_kb(void) {
     if (kb_state.is_suspended) {
         chThdSleepMilliseconds(500);
     }
 }
 
-bool shutdown_user(bool jump_to_bootloader) {
+bool shutdown_kb(bool jump_to_bootloader) {
     if (jump_to_bootloader) {
         render_dfu_screen();
     }
