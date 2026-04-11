@@ -20,7 +20,6 @@ void render_stats_screen(void) {
         oled_write_P(PSTR("  IS "), true);
         oled_write_P(PSTR("SLEEP"), true);
         oled_write_P(PSTR("====="), true);
-        return;
     }
 
     oled_advance_page(true);

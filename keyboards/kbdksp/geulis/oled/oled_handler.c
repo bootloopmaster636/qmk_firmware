@@ -94,7 +94,7 @@ bool oled_task_user(void) {
     if (kb_state.is_suspended || last_input_activity_elapsed() > OLED_TIMEOUT) {
         render_stats_screen();
         oled_off();
-        return false;
+        return true;
     } else {
         oled_on();
     }
@@ -116,13 +116,12 @@ bool oled_task_user(void) {
         // warning message if the slave side got plugged usb plugged in
         render_wrong_side();
         wrong_side_rendered = true;
-        return true;
     } else {
         render_screen_by_layer();
         invert_periodically();
     }
 
-    return false;
+    return true;
 }
 
 void invert_periodically(void) {
