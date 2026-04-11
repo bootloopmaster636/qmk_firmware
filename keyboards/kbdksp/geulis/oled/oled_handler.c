@@ -7,6 +7,7 @@
 #include <time.h>
 #include "action_layer.h"
 #include "config.h"
+#include "hardware/structs/rosc.h"
 #include "jpe230.h"
 #include "keyboard.h"
 #include "oled_driver.h"
@@ -37,12 +38,20 @@ void oled_timer_reset(void) {
     oled_timer = timer_read32();
 }
 
+uint32_t get_hw_seed(void) {
+    uint32_t seed = 0;
+    for (int i = 0; i < 32; i++) {
+        // Read one bit from the ROSC RANDOMBIT register
+        seed = (seed << 1) | (rosc_hw->randombit & 1);
+    }
+    return seed;
+}
+
 void oled_post_init(void) {
     oled_timer = timer_read32();
 
     // whether to render easter egg or not
-    uint32_t hardware_seed = *(volatile uint32_t *)(0x40060000 + 0x1C);
-    srand(hardware_seed);
+    srand(get_hw_seed());
     int random_result = (rand() % 16) + 1;
     enable_logo       = random_result == 1;
 }
@@ -117,9 +126,10 @@ bool oled_task_user(void) {
 }
 
 void invert_periodically(void) {
-    if (timer_read32() % 30000 == 0) {
+    if (timer_elapsed32(oled_timer) % 30000 == 0) {
         screen_inverted = !screen_inverted;
         oled_invert(screen_inverted);
+        oled_timer_reset();
     }
 }
 
