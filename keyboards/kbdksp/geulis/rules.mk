@@ -11,7 +11,7 @@ OLED_FILES = oled_handler.c \
 				screens/dfu_screen.c \
 				screens/stats_screen.c \
 
-SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) processes.c
+SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) processes.c tap_dances_hold.c
 
 DEBUG_MATRIX_SCAN_RATE_ENABLE = no
 
