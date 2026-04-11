@@ -72,6 +72,7 @@ void suspend_power_down_user() {
     if (is_keyboard_master()) {
         if (!kb_state.is_suspended) {
             kb_state.is_suspended = true;
+            transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
         }
     }
 }
@@ -80,6 +81,7 @@ void suspend_wakeup_init_user(void) {
     if (is_keyboard_master()) {
         if (kb_state.is_suspended) {
             kb_state.is_suspended = false;
+            transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
         }
     }
 }
