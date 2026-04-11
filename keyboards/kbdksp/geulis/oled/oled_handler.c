@@ -82,7 +82,7 @@ void render_screen_by_layer(void) {
 }
 
 bool oled_task_user(void) {
-    if (suspend_state.is_suspended || last_input_activity_elapsed() > OLED_TIMEOUT) {
+    if (kb_state.is_suspended || last_input_activity_elapsed() > OLED_TIMEOUT) {
         render_stats_screen();
         oled_off();
         return false;

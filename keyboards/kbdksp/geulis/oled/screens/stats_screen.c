@@ -7,7 +7,7 @@
 
 void render_stats_screen(void) {
     char words_typed_string[6];
-    sprintf(words_typed_string, "%lu", words_typed);
+    sprintf(words_typed_string, "%lu", kb_state.words_typed);
 
     char time_active[6];
     uint16_t timer_value = timer_read();
@@ -15,7 +15,7 @@ void render_stats_screen(void) {
     uint8_t minute_active = (timer_value / 60000) % 60;
     sprintf(time_active, "%02d:%02d", hour_active, minute_active);
 
-    if (suspend_state.is_suspended) {
+    if (kb_state.is_suspended) {
         oled_write_P(PSTR("SYSTEM"), true);
         oled_write_P(PSTR("  IS  "), true);
         oled_write_P(PSTR("SLEEP "), true);
@@ -26,13 +26,13 @@ void render_stats_screen(void) {
     oled_advance_page(true);
 
     oled_write_P(PSTR("STATS"), true);
-    oled_write_P(PSTR("-----"), true);
+    oled_write_ln_P(PSTR("-----"), true);
 
     oled_advance_page(true);
 
     oled_write_P(PSTR("Words"), false);
     oled_write_P(PSTR("typed"), false);
-    oled_write_P(PSTR(words_typed_string), false);
+    oled_write_ln_P(PSTR(words_typed_string), false);
 
     oled_advance_page(true);
 

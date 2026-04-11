@@ -68,14 +68,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                                                       KC_Y,   KC_U,   KC_I,   KC_O,   KC_MINS,    TD(TD_EQUAL_PLUS),
     KC_TAB   ,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G, KC_MEDIA_PLAY_PAUSE,                                                  KC_MUTE,        KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_V,   KC_B, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_N,   KC_M,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_BACKSPACE, TT(2),  KC_SPACE,                                                                             OSM(MOD_LSFT),OSL(3), KC_ENTER,TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),  KC_SPACE,                                                                                 OSM(MOD_LSFT),OSL(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
 ),
 
 [1] = LAYOUT_split_3x6_5t_plus(
     KC_ESCAPE,  KC_Q,   KC_W,   KC_F,   KC_P,   KC_B,                                                                                       KC_J,   KC_L,   KC_U,   KC_Y,   KC_MINS,    TD(TD_EQUAL_PLUS),
     KC_TAB   ,  KC_A,   KC_R,   KC_S,   KC_T,   KC_G, KC_MEDIA_PLAY_PAUSE,                                                  KC_MUTE,        KC_M,   KC_N,   KC_E,   KC_I,   KC_O,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_D,   KC_V, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_K,   KC_H,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_BACKSPACE, TT(2),  KC_SPACE,                                                                             OSM(MOD_LSFT),OSL(3), KC_ENTER,TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),  KC_SPACE,                                                                                 OSM(MOD_LSFT),OSL(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
 ),
 
 /*
