@@ -31,8 +31,7 @@ static uint32_t   oled_timer          = 0;
 static bool       logo_finished       = false;
 static kb_modes_t last_layer          = -1;
 static bool       enable_logo         = false;
-static bool       wrong_side_rendered = false;
-static bool screen_inverted = false;
+static bool       screen_inverted     = false;
 
 void oled_timer_reset(void) {
     oled_timer = timer_read32();
@@ -56,7 +55,7 @@ void oled_post_init(void) {
     enable_logo       = random_result == 1;
 }
 
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
     // Because all of my screen is portrait, we use this rotation
     return OLED_ROTATION_270;
 }
@@ -92,10 +91,14 @@ void render_screen_by_layer(void) {
 }
 
 bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+        return false;
+    }
+
     if (kb_state.is_suspended || last_input_activity_elapsed() > OLED_TIMEOUT) {
         render_stats_screen();
         oled_off();
-        return false;
+        return true;
     } else {
         oled_on();
     }
@@ -113,22 +116,14 @@ bool oled_task_user(void) {
         return true;
     }
 
-    if (is_keyboard_master() && !wrong_side_rendered) {
-        // Bc the oled is on the slave side, just print out
-        // warning message if the slave side got plugged usb plugged in
-        render_wrong_side();
-        wrong_side_rendered = true;
-        return false;
-    } else {
-        render_screen_by_layer();
-        invert_periodically();
-    }
+    render_screen_by_layer();
+    invert_periodically();
 
     return true;
 }
 
 void invert_periodically(void) {
-    if (timer_elapsed32(oled_timer) % 120000 == 0) {
+    if (timer_elapsed32(oled_timer) > 120000) {
         screen_inverted = !screen_inverted;
         oled_invert(screen_inverted);
         oled_timer_reset();

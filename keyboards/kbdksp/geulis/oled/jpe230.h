@@ -26,7 +26,6 @@ typedef enum {
 
 // Screens
 void render_logo(bool enable_ee); // ee is easter egg
-void render_wrong_side(void);
 void render_main_screen(kb_modes_t active_layer);
 void render_mouse_screen(void);
 void render_dfu_screen(void);

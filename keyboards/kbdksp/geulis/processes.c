@@ -17,7 +17,7 @@
 #include "transactions.h"
 #include "usb_report_handling.h"
 
-split_sync_state_t kb_state = {false, 0};
+split_sync_state_t kb_state        = {false, 0};
 split_sync_state_t last_sent_state = {false, 0};
 
 uint8_t  chars_typed  = 0;
@@ -64,9 +64,6 @@ void housekeeping_task_kb(void) {
 }
 
 void suspend_power_down_kb() {
-    oled_clear();
-    oled_render();
-
     if (is_keyboard_master()) {
         if (!kb_state.is_suspended) {
             kb_state.is_suspended = true;
@@ -106,19 +103,17 @@ void slave_receive_handler(uint8_t in_buflen, const void *in_data, uint8_t out_b
     kb_state.words_typed                      = received_config->words_typed;
 
     // do something regarding the data
-    if (last_sent_state.is_suspended != kb_state.is_suspended){
+    if (last_sent_state.is_suspended != kb_state.is_suspended) {
+        if (!is_keyboard_master()) {
+            oled_clear();
+            oled_render();
+        }
         if (kb_state.is_suspended) {
             suspend_power_down();
         } else {
-            if (!is_keyboard_master()){
-                oled_clear();
-                oled_render();
-
-            }
-
-            suspend_wakeup_init();
+           suspend_wakeup_init();
         }
     }
 
-    last_sent_state = kb_state;
+    last_sent_state = *received_config;
 }

@@ -7,7 +7,6 @@ OLED_FILES = oled_handler.c \
 				screens/bootlogo.c \
 				screens/main_screen.c \
 				screens/mouse_screen.c \
-				screens/wrong_side.c \
 				screens/dfu_screen.c \
 				screens/stats_screen.c \
 

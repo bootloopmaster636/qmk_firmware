@@ -17,12 +17,10 @@ void render_stats_screen(void) {
 
     if (kb_state.is_suspended) {
         oled_write_P(PSTR("SYSTM"), true);
-        oled_write_P(PSTR(" IS  "), true);
         oled_write_P(PSTR("SLEEP"), true);
         oled_write_P(PSTR("====="), true);
     }
 
-    oled_advance_page(true);
 
     oled_write_P(PSTR("STATS"), true);
     oled_write_ln_P(PSTR("-----"), true);
@@ -37,4 +35,6 @@ void render_stats_screen(void) {
 
     oled_write_P(PSTR("Time:"), false);
     oled_write_P(PSTR(time_active), false);
+
+    oled_advance_page(true);
 }
