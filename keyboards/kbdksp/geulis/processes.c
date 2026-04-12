@@ -18,6 +18,7 @@
 #include "usb_report_handling.h"
 
 split_sync_state_t kb_state = {false, 0};
+split_sync_state_t last_sent_state = {false, 0};
 
 uint8_t  chars_typed  = 0;
 uint16_t last_keycode = 0;
@@ -56,7 +57,6 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-
 void housekeeping_task_kb(void) {
     if (is_keyboard_master()) {
         transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
@@ -64,13 +64,14 @@ void housekeeping_task_kb(void) {
 }
 
 void suspend_power_down_kb() {
+    oled_clear();
+    oled_render();
+
     if (is_keyboard_master()) {
         if (!kb_state.is_suspended) {
             kb_state.is_suspended = true;
             transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
         }
-    } else {
-        oled_clear();
     }
 }
 
@@ -80,8 +81,6 @@ void suspend_wakeup_init_kb(void) {
             kb_state.is_suspended = false;
             transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
         }
-    } else {
-        oled_clear();
     }
 }
 
@@ -94,6 +93,7 @@ void matrix_scan_kb(void) {
 bool shutdown_kb(bool jump_to_bootloader) {
     if (jump_to_bootloader) {
         oled_clear();
+        oled_render();
         render_dfu_screen();
     }
     return true;
@@ -104,4 +104,21 @@ void slave_receive_handler(uint8_t in_buflen, const void *in_data, uint8_t out_b
     const split_sync_state_t *received_config = (const split_sync_state_t *)in_data;
     kb_state.is_suspended                     = received_config->is_suspended;
     kb_state.words_typed                      = received_config->words_typed;
+
+    // do something regarding the data
+    if (last_sent_state.is_suspended != kb_state.is_suspended){
+        if (kb_state.is_suspended) {
+            suspend_power_down();
+        } else {
+            if (!is_keyboard_master()){
+                oled_clear();
+                oled_render();
+
+            }
+
+            suspend_wakeup_init();
+        }
+    }
+
+    last_sent_state = kb_state;
 }

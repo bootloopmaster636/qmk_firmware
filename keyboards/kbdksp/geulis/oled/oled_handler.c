@@ -72,6 +72,7 @@ void render_screen_by_layer(void) {
     kb_modes_t layer = (kb_modes_t)get_highest_layer(layer_state | default_layer_state);
     if (layer != last_layer) {
         oled_clear();
+        oled_render();
         last_layer = layer;
     }
 
@@ -94,7 +95,7 @@ bool oled_task_user(void) {
     if (kb_state.is_suspended || last_input_activity_elapsed() > OLED_TIMEOUT) {
         render_stats_screen();
         oled_off();
-        return true;
+        return false;
     } else {
         oled_on();
     }
@@ -105,6 +106,7 @@ bool oled_task_user(void) {
 
         if (timer_elapsed32(oled_timer) > 3000) {
             oled_clear();
+            oled_render();
             logo_finished = true;
         }
 
@@ -116,6 +118,7 @@ bool oled_task_user(void) {
         // warning message if the slave side got plugged usb plugged in
         render_wrong_side();
         wrong_side_rendered = true;
+        return false;
     } else {
         render_screen_by_layer();
         invert_periodically();
@@ -125,7 +128,7 @@ bool oled_task_user(void) {
 }
 
 void invert_periodically(void) {
-    if (timer_elapsed32(oled_timer) % 300000 == 0) {
+    if (timer_elapsed32(oled_timer) % 120000 == 0) {
         screen_inverted = !screen_inverted;
         oled_invert(screen_inverted);
         oled_timer_reset();

@@ -39,7 +39,7 @@
 #define OLED_FADE_OUT_INTERVAL 15
 
 // Configurations
-#define TAPPING_TERM 150
+#define TAPPING_TERM 180
 #define PERMISSIVE_HOLD
 
 #define ONESHOT_TAP_TOGGLE 2
