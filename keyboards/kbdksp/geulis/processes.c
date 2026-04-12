@@ -11,6 +11,7 @@
 #include "keycodes.h"
 #include "matrix.h"
 #include "oled/jpe230.h"
+#include "oled_driver.h"
 #include "quantum_keycodes.h"
 #include "suspend.h"
 #include "transactions.h"
@@ -33,9 +34,6 @@ void keyboard_post_init_kb(void) {
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case QK_BOOT:
-                oled_off();
-                return true;
             case KC_A ... KC_0:
                 if (keycode != last_keycode) {
                     chars_typed++;
@@ -71,6 +69,8 @@ void suspend_power_down_kb() {
             kb_state.is_suspended = true;
             transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
         }
+    } else {
+        oled_clear();
     }
 }
 
@@ -80,6 +80,8 @@ void suspend_wakeup_init_kb(void) {
             kb_state.is_suspended = false;
             transaction_rpc_send(KB_TRANSACTION_SYNC_STATE, sizeof(split_sync_state_t), &kb_state);
         }
+    } else {
+        oled_clear();
     }
 }
 
@@ -91,6 +93,7 @@ void matrix_scan_kb(void) {
 
 bool shutdown_kb(bool jump_to_bootloader) {
     if (jump_to_bootloader) {
+        oled_clear();
         render_dfu_screen();
     }
     return true;

@@ -125,7 +125,7 @@ bool oled_task_user(void) {
 }
 
 void invert_periodically(void) {
-    if (timer_elapsed32(oled_timer) % 30000 == 0) {
+    if (timer_elapsed32(oled_timer) % 300000 == 0) {
         screen_inverted = !screen_inverted;
         oled_invert(screen_inverted);
         oled_timer_reset();
