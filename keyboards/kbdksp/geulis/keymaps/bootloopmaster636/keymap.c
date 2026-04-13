@@ -36,8 +36,7 @@ enum {
     TD_COMMA_PLUS,
     TD_DOT_PLUS,
     TD_BRACKETS,
-    TD_SHIFT_SPACE,
-    TD_BKSP
+    TD_SHIFT_TAB,
 };
 
 tap_dance_action_t tap_dance_actions[] = {
@@ -45,17 +44,16 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_COMMA_PLUS] = ACTION_TAP_DANCE_TAP_HOLD(KC_COMMA, LSFT(KC_9)),
     [TD_DOT_PLUS] = ACTION_TAP_DANCE_TAP_HOLD(KC_DOT, LSFT(KC_0)),
     [TD_BRACKETS] = ACTION_TAP_DANCE_TAP_HOLD(KC_LEFT_BRACKET, KC_RIGHT_BRACKET),
-    [TD_SHIFT_SPACE] = ACTION_TAP_DANCE_TAP_HOLD(KC_SPACE, KC_LSFT),
-    [TD_BKSP] = ACTION_TAP_DANCE_DOUBLE(KC_BACKSPACE, LCTL(KC_BACKSPACE))
+    [TD_SHIFT_TAB] = ACTION_TAP_DANCE_TAP_HOLD(KC_TAB, KC_LSFT),
 };
 
 
 // COMBOS
-const uint16_t PROGMEM capslock_combo[] = {KC_TAB, OSM(MOD_LCTL), COMBO_END};
-const uint16_t PROGMEM auto_underscore_combo[] = {TT(2), TD(TD_SHIFT_SPACE), COMBO_END};
-const uint16_t PROGMEM bootloader_combo[] = {TT(2), KC_TAB, KC_ESCAPE, COMBO_END};
-const uint16_t PROGMEM qwerty_pdf[] = {TD(TD_SHIFT_SPACE), OSM(MOD_LSFT), KC_MINUS, COMBO_END};
-const uint16_t PROGMEM colemak_pdf[] = {TD(TD_SHIFT_SPACE), OSM(MOD_LSFT), TD(TD_EQUAL_PLUS), COMBO_END};
+const uint16_t PROGMEM capslock_combo[] = {TD(TD_SHIFT_TAB), OSM(MOD_LCTL), COMBO_END};
+const uint16_t PROGMEM auto_underscore_combo[] = {TT(2), KC_SPACE, COMBO_END};
+const uint16_t PROGMEM bootloader_combo[] = {KC_SPACE, TD(TD_SHIFT_TAB), KC_ESCAPE, COMBO_END};
+const uint16_t PROGMEM qwerty_pdf[] = {KC_SPACE, OSM(MOD_LSFT), KC_MINUS, COMBO_END};
+const uint16_t PROGMEM colemak_pdf[] = {KC_SPACE, OSM(MOD_LSFT), TD(TD_EQUAL_PLUS), COMBO_END};
 combo_t key_combos[] = {
     COMBO(capslock_combo, KC_CAPS_LOCK),
     COMBO(auto_underscore_combo, LSFT(KC_MINUS)),
@@ -74,16 +72,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [0] = LAYOUT_split_3x6_5t_plus(
     KC_ESCAPE,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                                                       KC_Y,   KC_U,   KC_I,   KC_O,   KC_MINS,    TD(TD_EQUAL_PLUS),
-    KC_TAB   ,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G, KC_MEDIA_PLAY_PAUSE,                                                  KC_MUTE,        KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_QUOTE,
+    TD(TD_SHIFT_TAB),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G, KC_MEDIA_PLAY_PAUSE,                                          KC_MUTE,        KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_V,   KC_B, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_N,   KC_M,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),TD(TD_SHIFT_SPACE),                                                                         OSM(MOD_RSFT),OSL(3), TD(TD_BKSP),TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),KC_SPACE,                                                                         OSM(MOD_RSFT),OSL(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
 ),
 
 [1] = LAYOUT_split_3x6_5t_plus(
     KC_ESCAPE,  KC_Q,   KC_W,   KC_F,   KC_P,   KC_B,                                                                                       KC_J,   KC_L,   KC_U,   KC_Y,   KC_MINS,    TD(TD_EQUAL_PLUS),
-    KC_TAB   ,  KC_A,   KC_R,   KC_S,   KC_T,   KC_G, KC_MEDIA_PLAY_PAUSE,                                                  KC_MUTE,        KC_M,   KC_N,   KC_E,   KC_I,   KC_O,       KC_QUOTE,
+    TD(TD_SHIFT_TAB),   KC_A,   KC_R,   KC_S,   KC_T,   KC_G, KC_MEDIA_PLAY_PAUSE,                                          KC_MUTE,        KC_M,   KC_N,   KC_E,   KC_I,   KC_O,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_D,   KC_V, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_K,   KC_H,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),TD(TD_SHIFT_SPACE),                                                                         OSM(MOD_RSFT),OSL(3), TD(TD_BKSP),TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),KC_SPACE,                                                                         OSM(MOD_RSFT),OSL(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
 ),
 
 /*
