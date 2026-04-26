@@ -52,8 +52,8 @@ tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM capslock_combo[] = {TD(TD_SHIFT_TAB), OSM(MOD_LCTL), COMBO_END};
 const uint16_t PROGMEM auto_underscore_combo[] = {TT(2), KC_SPACE, COMBO_END};
 const uint16_t PROGMEM bootloader_combo[] = {KC_SPACE, TD(TD_SHIFT_TAB), KC_ESCAPE, COMBO_END};
-const uint16_t PROGMEM qwerty_pdf[] = {KC_SPACE, OSM(MOD_LSFT), KC_MINUS, COMBO_END};
-const uint16_t PROGMEM colemak_pdf[] = {KC_SPACE, OSM(MOD_LSFT), TD(TD_EQUAL_PLUS), COMBO_END};
+const uint16_t PROGMEM qwerty_pdf[] = {KC_SPACE, OSM(MOD_RSFT), KC_MINUS, COMBO_END};
+const uint16_t PROGMEM colemak_pdf[] = {KC_SPACE, OSM(MOD_RSFT), TD(TD_EQUAL_PLUS), COMBO_END};
 combo_t key_combos[] = {
     COMBO(capslock_combo, KC_CAPS_LOCK),
     COMBO(auto_underscore_combo, LSFT(KC_MINUS)),
