@@ -28,7 +28,7 @@
         "rows": ["GP28", "GP15", "GP26", "GP27", "GP14"]
     },
     "processor": "RP2040",
-    "url": "",
+    "url": "https://kbdksp.com/",
     "usb": {
         "device_version": "1.0.0",
         "pid": "0x0287",
