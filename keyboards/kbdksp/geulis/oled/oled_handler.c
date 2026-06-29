@@ -109,7 +109,7 @@ bool oled_task_user(void) {
 
         if (timer_elapsed32(oled_timer) > 3000) {
             oled_clear();
-            oled_render();
+            oled_render_dirty(true);
             logo_finished = true;
         }
 
