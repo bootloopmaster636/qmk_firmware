@@ -90,7 +90,7 @@ void matrix_scan_kb(void) {
 bool shutdown_kb(bool jump_to_bootloader) {
     if (jump_to_bootloader) {
         oled_clear();
-        oled_render();
+        oled_render_dirty(true);
         render_dfu_screen();
     }
     return true;
@@ -106,12 +106,12 @@ void slave_receive_handler(uint8_t in_buflen, const void *in_data, uint8_t out_b
     if (last_sent_state.is_suspended != kb_state.is_suspended) {
         if (!is_keyboard_master()) {
             oled_clear();
-            oled_render();
+            oled_render_dirty(true);
         }
         if (kb_state.is_suspended) {
             suspend_power_down();
         } else {
-           suspend_wakeup_init();
+            suspend_wakeup_init();
         }
     }
 

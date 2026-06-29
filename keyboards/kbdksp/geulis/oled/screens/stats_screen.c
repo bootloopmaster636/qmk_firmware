@@ -9,11 +9,11 @@ void render_stats_screen(void) {
     char words_typed_string[6];
     sprintf(words_typed_string, "%lu", kb_state.words_typed);
 
-    char     time_active[6];
+    char     time_active[10];
     uint32_t timer_value   = timer_read32();
     uint8_t  hour_active   = (timer_value / 3600000) % 100;
     uint8_t  minute_active = (timer_value / 60000) % 60;
-    sprintf(time_active, "%02d:%02d", hour_active, minute_active);
+    sprintf(time_active, "%02dh\n%02dm", hour_active, minute_active);
 
     if (kb_state.is_suspended) {
         oled_write_P(PSTR("SLEEP"), true);

@@ -27,11 +27,11 @@ __attribute__((weak)) oled_rotation_t rotate_slave(oled_rotation_t rotation) {
 }
 
 // Global variables
-static uint32_t   oled_timer          = 0;
-static bool       logo_finished       = false;
-static kb_modes_t last_layer          = -1;
-static bool       enable_logo         = false;
-static bool       screen_inverted     = false;
+static uint32_t   oled_timer      = 0;
+static bool       logo_finished   = false;
+static kb_modes_t last_layer      = -1;
+static bool       enable_logo     = false;
+static bool       screen_inverted = false;
 
 void oled_timer_reset(void) {
     oled_timer = timer_read32();
@@ -71,7 +71,7 @@ void render_screen_by_layer(void) {
     kb_modes_t layer = (kb_modes_t)get_highest_layer(layer_state | default_layer_state);
     if (layer != last_layer) {
         oled_clear();
-        oled_render();
+        oled_render_dirty(true);
         last_layer = layer;
     }
 
