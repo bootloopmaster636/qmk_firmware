@@ -1,5 +1,4 @@
-/* Copyright 2022 Vladislav Kucheriavykh
- * Copyright 2026 Google LLC
+/* Copyright 2024 Yiancar-Designs
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +16,9 @@
 
 #pragma once
 
-#include "test_common.h"
+/* RGB options */
 
-#define SPECULATIVE_HOLD
-<<<<<<<< HEAD:tests/tap_hold_configurations/speculative_hold/speculative_hold_one_key/config.h
-#define SPECULATIVE_HOLD_ONE_KEY
-#define DUMMY_MOD_NEUTRALIZER_KEYCODE KC_F24
-========
-#define SPECULATIVE_HOLD_FLOW_TERM 200
->>>>>>>> master:tests/tap_hold_configurations/speculative_hold/speculative_hold_flow_term/config.h
+#define WS2812_SPI_DRIVER SPID2
+#define WS2812_SPI_MOSI_PAL_MODE 0
+#define WS2812_SPI_SCK_PAL_MODE 0
+#define WS2812_SPI_SCK_PIN B13
