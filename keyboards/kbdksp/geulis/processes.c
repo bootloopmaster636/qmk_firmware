@@ -104,10 +104,6 @@ void slave_receive_handler(uint8_t in_buflen, const void *in_data, uint8_t out_b
 
     // do something regarding the data
     if (last_sent_state.is_suspended != kb_state.is_suspended) {
-        if (!is_keyboard_master()) {
-            oled_clear();
-            oled_render_dirty(true);
-        }
         if (kb_state.is_suspended) {
             suspend_power_down();
         } else {

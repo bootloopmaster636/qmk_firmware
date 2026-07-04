@@ -27,11 +27,12 @@ __attribute__((weak)) oled_rotation_t rotate_slave(oled_rotation_t rotation) {
 }
 
 // Global variables
-static uint32_t   oled_timer      = 0;
-static bool       logo_finished   = false;
-static kb_modes_t last_layer      = -1;
-static bool       enable_logo     = false;
-static bool       screen_inverted = false;
+static uint32_t   oled_timer              = 0;
+static bool       logo_finished           = false;
+static kb_modes_t last_layer              = -1;
+static bool       enable_logo             = false;
+static bool       screen_inverted         = false;
+static bool       screen_prev_power_state = true;
 
 void oled_timer_reset(void) {
     oled_timer = timer_read32();
@@ -96,11 +97,22 @@ bool oled_task_user(void) {
     }
 
     if (kb_state.is_suspended || last_input_activity_elapsed() > OLED_TIMEOUT) {
+        if (screen_prev_power_state) {
+            oled_clear();
+            oled_render_dirty(true);
+            chThdSleepMilliseconds(1000);
+            oled_off();
+            screen_prev_power_state = false;
+        }
         render_stats_screen();
-        oled_off();
         return true;
     } else {
-        oled_on();
+        if (!screen_prev_power_state) {
+            oled_on();
+            oled_clear();
+            oled_render_dirty(true);
+            screen_prev_power_state = true;
+        }
     }
 
     // Render logo if the keyboard just booted
