@@ -100,11 +100,11 @@ bool oled_task_user(void) {
         if (screen_prev_power_state) {
             oled_clear();
             oled_render_dirty(true);
-            chThdSleepMilliseconds(1000);
-            oled_off();
             screen_prev_power_state = false;
         }
         render_stats_screen();
+        chThdSleepMilliseconds(150);
+        oled_off();
         return true;
     } else {
         if (!screen_prev_power_state) {
