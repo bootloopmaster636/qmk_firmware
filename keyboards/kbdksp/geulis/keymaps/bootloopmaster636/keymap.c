@@ -28,6 +28,8 @@
 #include "quantum.h"
 #include "quantum_keycodes.h"
 #include "tap_dances_hold.h"
+#include "keymap_functions.h"
+#include "processes.h"
 #include QMK_KEYBOARD_H
 
 // TAP DANCES
@@ -49,18 +51,39 @@ tap_dance_action_t tap_dance_actions[] = {
 
 
 // COMBOS
+enum combos {
+    CMB_CAPS,
+    CMB_UNDERSCORE,
+    CMB_BOOTLOADER,
+    CMB_QWERTY_PDF,
+    CMB_COLEMAK_PDF,
+    CMB_EMDASH,
+
+    COMBO_LENGTH // Automatically equals total count
+};
 const uint16_t PROGMEM capslock_combo[] = {TD(TD_SHIFT_TAB), OSM(MOD_LCTL), COMBO_END};
 const uint16_t PROGMEM auto_underscore_combo[] = {TT(2), KC_SPACE, COMBO_END};
 const uint16_t PROGMEM bootloader_combo[] = {KC_SPACE, TD(TD_SHIFT_TAB), KC_ESCAPE, COMBO_END};
 const uint16_t PROGMEM qwerty_pdf[] = {KC_SPACE, OSM(MOD_RSFT), KC_MINUS, COMBO_END};
 const uint16_t PROGMEM colemak_pdf[] = {KC_SPACE, OSM(MOD_RSFT), TD(TD_EQUAL_PLUS), COMBO_END};
-combo_t key_combos[] = {
-    COMBO(capslock_combo, KC_CAPS_LOCK),
-    COMBO(auto_underscore_combo, LSFT(KC_MINUS)),
-    COMBO(bootloader_combo, MO(4)),
-    COMBO(qwerty_pdf, PDF(0)),
-    COMBO(colemak_pdf, PDF(1)),
+const uint16_t PROGMEM uc_emdash[] = {TD(TD_COMMA_PLUS), KC_MINS, COMBO_END};
+combo_t key_combos[COMBO_LENGTH] = {
+    [CMB_CAPS]       = COMBO(capslock_combo, KC_CAPS_LOCK),
+    [CMB_UNDERSCORE] = COMBO(auto_underscore_combo, LSFT(KC_MINUS)),
+    [CMB_BOOTLOADER] = COMBO(bootloader_combo, MO(4)),
+    [CMB_QWERTY_PDF] = COMBO(qwerty_pdf, PDF(0)),
+    [CMB_COLEMAK_PDF] = COMBO(colemak_pdf, PDF(1)),
+    [CMB_EMDASH]     = COMBO(uc_emdash, KC_NO),
 };
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    if (!pressed) return;
+    switch(combo_index){
+        case CMB_EMDASH:
+            send_unicode(0x2014, kb_state.current_os);
+            break;
+    }
+}
 
 
 

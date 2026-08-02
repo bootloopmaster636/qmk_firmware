@@ -30,7 +30,6 @@ __attribute__((weak)) oled_rotation_t rotate_slave(oled_rotation_t rotation) {
 static uint32_t   oled_timer              = 0;
 static bool       logo_finished           = false;
 static kb_modes_t last_layer              = -1;
-static bool       enable_logo             = false;
 static bool       screen_inverted         = false;
 static bool       screen_prev_power_state = true;
 
@@ -49,11 +48,9 @@ uint32_t get_hw_seed(void) {
 
 void oled_post_init(void) {
     oled_timer = timer_read32();
-
-    // whether to render easter egg or not
     srand(get_hw_seed());
-    int random_result = (rand() % 16) + 1;
-    enable_logo       = random_result == 1;
+
+    // Do something if you want to
 }
 
 oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
@@ -117,7 +114,7 @@ bool oled_task_user(void) {
 
     // Render logo if the keyboard just booted
     if (!logo_finished) {
-        render_logo(enable_logo);
+        render_logo();
 
         if (timer_elapsed32(oled_timer) > 3000) {
             oled_clear();

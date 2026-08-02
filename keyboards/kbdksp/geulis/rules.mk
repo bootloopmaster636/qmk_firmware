@@ -10,7 +10,11 @@ OLED_FILES = oled_handler.c \
 				screens/dfu_screen.c \
 				screens/stats_screen.c \
 
-SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) processes.c tap_dances_hold.c
+KEYMAPS_DIR = keymaps/bootloopmaster636
+KEYMAPS_FILES = keymap_functions.c \
+				tap_dances_hold.c
+
+SRC += $(addprefix $(OLED_DIR)/, $(OLED_FILES)) $(addprefix $(KEYMAPS_DIR)/, $(KEYMAPS_FILES)) processes.c
 
 DEBUG_MATRIX_SCAN_RATE_ENABLE = no
 
@@ -28,3 +32,5 @@ MOUSEKEY_ENABLE = yes
 COMBO_ENABLE = yes
 DEBOUNCE_TYPE = sym_eager_pk
 NKRO_ENABLE = yes
+UNICODE_COMMON = yes
+OS_DETECTION_ENABLE = yes

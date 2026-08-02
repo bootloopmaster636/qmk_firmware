@@ -12,13 +12,14 @@
 #include "matrix.h"
 #include "oled/jpe230.h"
 #include "oled_driver.h"
+#include "os_detection.h"
 #include "quantum_keycodes.h"
 #include "suspend.h"
 #include "transactions.h"
 #include "usb_report_handling.h"
 
-split_sync_state_t kb_state        = {false, 0};
-split_sync_state_t last_sent_state = {false, 0};
+split_sync_state_t kb_state        = {false, 0, OS_UNSURE};
+split_sync_state_t last_sent_state = {false, 0, OS_UNSURE};
 
 uint8_t  chars_typed  = 0;
 uint16_t last_keycode = 0;
@@ -96,11 +97,18 @@ bool shutdown_kb(bool jump_to_bootloader) {
     return true;
 }
 
+bool process_detected_host_os_kb(os_variant_t detected_os) {
+    kb_state.current_os = detected_os;
+
+    return true;
+}
+
 //////////////// Split transport related code below ////////////////
 void slave_receive_handler(uint8_t in_buflen, const void *in_data, uint8_t out_buflen, void *out_data) {
     const split_sync_state_t *received_config = (const split_sync_state_t *)in_data;
     kb_state.is_suspended                     = received_config->is_suspended;
     kb_state.words_typed                      = received_config->words_typed;
+    kb_state.current_os                       = received_config->current_os;
 
     // do something regarding the data
     if (last_sent_state.is_suspended != kb_state.is_suspended) {

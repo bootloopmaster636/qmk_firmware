@@ -7,11 +7,11 @@
 #include "transactions.h"
 
 typedef struct {
-    bool is_suspended;
-    uint32_t words_typed;
+    bool         is_suspended;
+    uint32_t     words_typed;
+    os_variant_t current_os;
 } split_sync_state_t;
 
 extern split_sync_state_t kb_state;
 
-
-void slave_receive_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data);
+void slave_receive_handler(uint8_t in_buflen, const void *in_data, uint8_t out_buflen, void *out_data);
