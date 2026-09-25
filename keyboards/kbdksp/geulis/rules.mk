@@ -30,7 +30,7 @@ MOUSEKEY_ENABLE = yes
 
 # Other
 COMBO_ENABLE = yes
-DEBOUNCE_TYPE = sym_eager_pr
+DEBOUNCE_TYPE = sym_eager_pk
+NKRO_ENABLE = yes
 UNICODE_COMMON = yes
 OS_DETECTION_ENABLE = yes
-KEY_LOCK_ENABLE = yes
