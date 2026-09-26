@@ -97,14 +97,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                                                       KC_Y,   KC_U,   KC_I,   KC_O,   KC_MINS,    TD(TD_EQUAL_PLUS),
     TD(TD_SHIFT_TAB),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G, KC_MEDIA_PLAY_PAUSE,                                          KC_MUTE,        KC_H,   KC_J,   KC_K,   KC_L,   KC_P,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_V,   KC_B, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_N,   KC_M,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),KC_SPACE,                                                                         OSM(MOD_RSFT),TT(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),KC_SPACE,                                                                         OSM(MOD_RSFT),TT(3), KC_BACKSPACE,QK_LOCK,KC_BACKSLASH
 ),
 
 [1] = LAYOUT_split_3x6_5t_plus(
     KC_ESCAPE,  KC_Q,   KC_W,   KC_F,   KC_P,   KC_B,                                                                                       KC_J,   KC_L,   KC_U,   KC_Y,   KC_MINS,    TD(TD_EQUAL_PLUS),
     TD(TD_SHIFT_TAB),   KC_A,   KC_R,   KC_S,   KC_T,   KC_G, KC_MEDIA_PLAY_PAUSE,                                          KC_MUTE,        KC_M,   KC_N,   KC_E,   KC_I,   KC_O,       KC_QUOTE,
     OSM(MOD_LCTL),KC_Z, KC_X,   KC_C,   KC_D,   KC_V, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK,             LCA(KC_F13), LCA(KC_F14),       KC_K,   KC_H,   TD(TD_COMMA_PLUS), TD(TD_DOT_PLUS), KC_SLASH, KC_SEMICOLON,
-    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),KC_SPACE,                                                                         OSM(MOD_RSFT),TT(3), KC_BACKSPACE,TD(TD_BRACKETS),KC_BACKSLASH
+    KC_LGUI  ,  OSM(MOD_LALT),  KC_ENTER, TT(2),KC_SPACE,                                                                         OSM(MOD_RSFT),TT(3), KC_BACKSPACE,QK_LOCK,KC_BACKSLASH
 ),
 
 /*
@@ -123,9 +123,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [3] = LAYOUT_split_3x6_5t_plus(
     KC_F1    ,  KC_F2,      KC_F3,  KC_F4,  KC_F5,  KC_F6,                                                                  KC_F7,      KC_F8,      KC_F9,      KC_F10, KC_F11,     KC_F12,
-    KC_GRAVE ,  KC_1,       KC_2,   KC_3,   KC_4,   KC_5,   KC_TRNS,                                            KC_TRNS,    KC_6,       KC_7,       KC_8,       KC_9,   KC_0,       KC_NO,
-    KC_TRNS  ,  KC_NO,      KC_PRINT_SCREEN,KC_NO,  KC_INSERT, KC_DELETE, KC_TRNS, KC_TRNS,         KC_TRNS,    KC_TRNS,    KC_NO,      KC_HOME,    KC_END,     KC_DOT,  KC_NO,      KC_NO,
-    KC_TRNS  ,  KC_TRNS,    KC_TRNS,KC_TRNS,  KC_TRNS,                                                                        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_NO,   KC_NO
+    KC_GRAVE ,  KC_1,       KC_2,   KC_3,   KC_4,   KC_5,   KC_TRNS,                                            KC_TRNS,    KC_6,       KC_7,       KC_8,       KC_9,   KC_0,       KC_DOT,
+    KC_TRNS  ,  KC_NO,      KC_PRINT_SCREEN,KC_NO,  KC_INSERT, KC_DELETE, KC_TRNS, KC_TRNS,         KC_TRNS,    KC_TRNS,    KC_HOME,    KC_END,     KC_LEFT_BRACKET,KC_RIGHT_BRACKET,KC_NO,      KC_NO,
+    KC_TRNS  ,  KC_TRNS,    KC_TRNS,KC_TRNS,  KC_TRNS,                                                                      KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_NO,   KC_NO
 ),
 
 
